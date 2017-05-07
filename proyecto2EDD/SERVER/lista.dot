@@ -1,0 +1,12 @@
+digraph G { 
+rankdir=LR; 
+ node [shape=box];
+ node [style=filled]; 
+ node [fillcolor="#31CEF0"];
+ node [color="#31CEF0"];
+ edge [color="#31CEF0"];
+0[label="2"];
+1[label="2"];
+
+0 -> 1;
+ }

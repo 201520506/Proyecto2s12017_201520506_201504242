@@ -14,6 +14,8 @@ class Nodo(object):
 		self.tabla = tablaHash.tabla()
 	def getValor(self):
 		return self.valor
+	def getTabla(self):
+		return self.tabla
 
 	def getIndice(self):
 		return self.indice
@@ -55,11 +57,12 @@ class Lista(object):
 		return None
 
 	def buscarUsuario(self,usuario):
-		print(usuario)
 		auxiliar = self.primero
 		while auxiliar != None:
-			print(auxiliar.usuario)
+			#print(usuario)
 			if auxiliar.usuario == usuario:
+			#	print(auxiliar.getValor())
+			#	print(auxiliar.usuario)
 				return auxiliar
 
 			auxiliar = auxiliar.siguiente
@@ -102,6 +105,7 @@ class Lista(object):
 		coladot.write("digraph G { \n" + cadena + "\n" + apuntadores + "\n }")
 		coladot.close()
 		#os.system("lista.bat")
+		return "digraph G { \n" + cadena + "\n" + apuntadores + "\n }"
 
 	def reporteActivos(self):
 		auxiliar = self.primero

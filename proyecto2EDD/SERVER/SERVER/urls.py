@@ -24,4 +24,10 @@ urlpatterns = [
     url(r'^registro/', views.registro,name='registro' ),
     url(r'^tHash/', views.tHash,name='tHash' ),
     url(r'^insertarEvento/', views.insertarEvento,name='insertarEvento' ),
+    url(r'^getNodoEvento/', views.getNodoEvento,name='getNodoEvento' ),
+    url(r'^modificarEvento/', views.modificarEvento,name='modificarEvento' ),
+    url(r'^eliminarEvento/', views.eliminarEvento,name='eliminarEvento' ),
+    url(r'^crearQR/', views.crearQR,name='crearQR' ),
+    url(r'^CrearCarpeta/', views.CrearCarpeta,name='CrearCarpeta' ),
+
 ]

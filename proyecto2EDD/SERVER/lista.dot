@@ -5,7 +5,7 @@ rankdir=LR;
  node [fillcolor="#31CEF0"];
  node [color="#31CEF0"];
  edge [color="#31CEF0"];
-0[label="2"];
+0[label="1"];
 1[label="2"];
 
 0 -> 1;

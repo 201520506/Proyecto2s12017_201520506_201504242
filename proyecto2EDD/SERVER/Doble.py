@@ -1,4 +1,5 @@
 import matriz
+import B
 class Nodo:
 	def __init__(self,dato,contra):
 		self.siguiente = None
@@ -6,6 +7,7 @@ class Nodo:
 		self.usuario = dato
 		self.pas = contra
 		self.MATRIZ = matriz.Matriz()
+		self.arbol = B.ArbolB()
 
 	def verusuario(self):
 		return self.usuario
@@ -31,12 +33,15 @@ class Lista(object):
 		if self.vacia()==True:
 			self.cabeza = temporal
 			self.cola = temporal
+			#print("Ingreso primer dato a doble")
 			return True
 		else: 
 			temporal.siguiente=self.cabeza
 			self.cabeza.anterior=temporal
 			self.cabeza=temporal
+			#print("Ingreso dato a doble")
 			return True
+		
 
 	def Listar (self):
 		print ("...............")
@@ -60,7 +65,6 @@ class Lista(object):
 		print ("...............")
 		temporal=self.cola
 		while temporal != None:
-			print(temporal.verusuario())
 			temporal=temporal.anterior
 
 	def BorrarPrimero (self):
@@ -77,12 +81,14 @@ class Lista(object):
 			self.cola = self.cola.anterior
 			self.cola.siguiente=None
 
-	def buscar(self,valor):
-		auxiliar = self.primero
+	def buscarUsuario(self,usuario):
+		
+		auxiliar = self.cabeza
+		#print(usuario+"BUSQUEDA"+auxiliar.usuario)
 		while auxiliar != None:
-			if auxiliar.getValor() == valor:
+			if auxiliar.usuario == usuario:
+				#print("retornara"+auxiliar.usuario)
 				return auxiliar
-			auxiliar = auxiliar.siguiente
-		return None
 
-												
+			auxiliar = auxiliar.siguiente
+		return None												

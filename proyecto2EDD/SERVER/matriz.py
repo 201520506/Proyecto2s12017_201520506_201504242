@@ -1,6 +1,6 @@
 import os
 import lista
-import Doble
+
 class Nodo(object):
 	"""docstring for Nodo"""
 	def __init__(self,empresa,departamento,nombre):
@@ -15,7 +15,10 @@ class Nodo(object):
 		self.arriba = None
 		self.abajo = None
 		self.usuarios = lista.Lista()
-		#self.usuarios = Doble.Lista()
+
+	def getEmpresa(self):
+		return self.empresa
+
 class Matriz(object):
 	"""docstring for Matriz"""
 	def __init__(self):
@@ -23,7 +26,7 @@ class Matriz(object):
 		self.primero = Nodo("","","")
 		self.lengthX = 0
 		self.lengthY = 0
-	
+		
 #----------------------------------------------Metodo Insertar
 	def Insertar(self,empresa,departamento,nombre,usuario,password):
 		nuevo = Nodo(empresa,departamento,nombre)
@@ -78,7 +81,7 @@ class Matriz(object):
 					#nodo.nombre = nombre
 					nodo.usuarios.insertar(nombre,usuario,password)
 					nodo.usuarios.report() 
-#		return self.report()
+		return self.report()
 #----------------------------------------------Metodo para Reporte
 	def report(self):
 		#matrizdot = open("matriz.dot","w")
@@ -119,6 +122,7 @@ class Matriz(object):
 		auxiliar = self.primero
 		while auxiliar != None:
 			if str(auxiliar.empresa) == str(empresa):
+				#print("saldra: "+auxiliar.empresa+" empresa:"+empresa)
 				return auxiliar
 			auxiliar = auxiliar.derecha
 		return None
@@ -127,6 +131,7 @@ class Matriz(object):
 		auxiliar = self.primero
 		while auxiliar != None:
 			if str(auxiliar.departamento) == str(departamento):
+				#print("saldra: "+auxiliar.departamento+" departamento:"+departamento)
 				return auxiliar
 			auxiliar = auxiliar.abajo
 		return None
@@ -177,6 +182,7 @@ class Matriz(object):
 #----------------------------------------------Metodo getNodo
 	def getNodo(self,col,fila):
 		aux = self.primero
+		#print(self.primero.nombre)
 		while aux != None:
 			if str(aux.x) == str(col):
 				aux2 = aux
@@ -213,26 +219,100 @@ class Matriz(object):
 		departamento = self.departamentoExistente(departamento)
 		if (empresa!=None) and (departamento!=None):
 			nodo = self.getNodo(empresa.x,departamento.y)
+			
 			if nodo != None:
 				usuario = nodo.usuarios.buscarUsuario(usuario)
 				if usuario!=None:
 					usuario.arbol.insertarNUEVO(nombreActivo,descripcionActivo,idActivo)
 
 #//////////////// METODO NUEVO DE INSERTAR UN EVENTO A LA HASH /////////////
-	def insertarEvento(self,m,a,usuario,descripcionActivo,idActivo,direccion,hora,eliminado):
+	def insertarEvento(self,a,m,listaUsuarioario,dia,descripcionActivo,idActivo,direccion,hora,eliminado):
 		ano = self.empresaExistente(a)
 		mes = self.departamentoExistente(m)
-		print(mes)
-		print(ano)
+		#print(mes.y)
+		#print(ano.x)
 		if (mes!=None) and (ano!=None):
-			nodo = self.getNodo(mes.x,ano.y)
-			print(nodo)
+			nodo = self.getNodo(ano.x,mes.y)
+		#	print(nodo)
 			if nodo != None:
-				usuario = nodo.usuarios.buscarUsuario(usuario)
-				print(usuario)
-				if usuario!=None:
-					usuario.tabla.insertar(idActivo,direccion,descripcionActivo,hora,eliminado)
+				var = listaUsuarioario
+				listaUsuario = nodo.usuarios.buscarUsuario(var.usuario)
+				if listaUsuario!=None:
+					listaUsuario.tabla.insertar(idActivo,dia,direccion,descripcionActivo,hora,eliminado)
+					
+					listaUsuario.tabla.listar()
 					print("llego a insertar evento")
+#/////////////////// METODO PARA OBTENER EVENTO //////
+	def obtenerEventos(self,evento,dia,m,a,datosUsuario):
+		ano = self.empresaExistente(a)
+		mes = self.departamentoExistente(m)
+		print(ano)
+		print(mes)
+		dato=""
+		if (mes!=None) and (ano!=None):
+			nodo = self.getNodo(ano.x,mes.y)
+			if nodo != None:
+				var = datosUsuario
+				datosUsuario = nodo.usuarios.buscarUsuario(var.usuario)
+				
+				if datosUsuario != None:
+				#metodo para obtener datos igual evento ingresado
+					recibidos = datosUsuario.tabla.obtenerIguales(evento,dia)
+					dato=recibidos
+					print("datos a modificar"+str(recibidos));
+		return dato;
+# ////////////////// METODO NUEVO PARA MODIFICAR //////////////
+	def insertarEvento(self,a,m,listaUsuarioario,dia,descripcionActivo,idActivo,direccion,hora,eliminado):
+		ano = self.empresaExistente(a)
+		mes = self.departamentoExistente(m)
+		#print(mes.y)
+		#print(ano.x)
+		if (mes!=None) and (ano!=None):
+			nodo = self.getNodo(ano.x,mes.y)
+		#	print(nodo)
+			if nodo != None:
+				var = listaUsuarioario
+				listaUsuario = nodo.usuarios.buscarUsuario(var.usuario)
+				if listaUsuario!=None:
+					listaUsuario.tabla.insertar(idActivo,dia,direccion,descripcionActivo,hora,eliminado)
+					
+					listaUsuario.tabla.listar()
+					print("llego a insertar evento")
+# //////////////// METODO PARA ELIMINAR ////////////////
+	def eliminarEvento(self,LISTA,evento,dia,m,a,dire,des,hora,eliminado):
+		ano = self.empresaExistente(a)
+		mes = self.departamentoExistente(m)
+		if (mes!=None) and (ano!=None):
+			nodo = self.getNodo(ano.x,mes.y)
+			if nodo != None:
+				var = LISTA
+			 	LISTA = nodo.usuarios.buscarUsuario(var.usuario)
+			 	if LISTA!=None:
+			 		fecha = str(dia)+"/"+str(m)+"/"+str(a)
+			 		LISTA.tabla.eliminar(evento,dia,dire,des,hora,eliminado)
+			 		LISTA.tabla.listar
+		return None
+
+#///////////// METODO PARA MODIFICAR ////////////////
+	def modEvento(self,LISTA,
+		Aevento,Aano,Ames,Adia,Adir,Adesc,Ahora,Aeliminado,
+		Nevento,Nfecha,Ndirec,Ndesc,Nhora):
+
+		ano = self.empresaExistente(Aano)
+		mes = self.departamentoExistente(Ames)
+		if (mes!=None) and (ano!=None):
+			nodo = self.getNodo(ano.x,mes.y)
+			if nodo != None:
+			 	var = LISTA
+			 	LISTA = nodo.usuarios.buscarUsuario(var.usuario)
+			 	if LISTA!=None:
+			 		LISTA.tabla.modificar(Aevento,Adia,Adir,Adesc,Ahora,Aeliminado,
+			 			Nevento,Nfecha,Ndirec,Ndesc,Nhora						)
+			 		print("-------------- MODIFICO --------------")
+					
+					LISTA.tabla.listar()
+					return "r"
+
 	def obtenerActivo(self,empresa,departamento,usuario,idActivo):
 		empresa = self.empresaExistente(empresa)
 		departamento = self.departamentoExistente(departamento)
